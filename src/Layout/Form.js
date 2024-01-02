@@ -1,16 +1,17 @@
 import React, { useEffect, useState} from "react";
 import { Link, Route } from "react-router-dom";
 import BreadCrumbBar from "./BreadCrumbBar";
-import { createDeck, updateDeck } from "../utils/api";
+import { updateCard, createCard } from "../utils/api";
 import DeckDetails from "./DeckDetails";
 
-function Form({initValue, mode}) {
+function Form({cardInput, deckId, mode}) {
     let response = {};
     
-    const [newDeck, setNewDeck] = useState({...initValue});
+    const [card, setCard] = useState(cardInput);
+    // setCard({cardInput});
 
     const handleChange = (({target: {id, value}}) => {
-        setNewDeck({...newDeck, 
+        setCard({...card, 
             [id]: value,
         })
     });
@@ -18,15 +19,15 @@ function Form({initValue, mode}) {
     const handleSubmit = (event) => {
         event.preventDefault();
         // submit newDeck to 
-        async function callCreateDeck () {
+        async function cardAction () {
             const abortController = new AbortController();
             try {
                 if (mode === "Edit") {
-                     response = await updateDeck(newDeck, abortController.signal);
+                     response = await updateCard(card, abortController.signal);
                 } else {
-                     response = await createDeck(newDeck, abortController.signal);
+                     response = await createCard(deckId, card, abortController.signal);
                 }
-            window.location=`/decks/${response.id}`;
+            window.location=`/decks/${deckId}`;
             } catch (error) {
                 if (error === "AbortError") {
                     console.log("Aborted");
@@ -35,36 +36,37 @@ function Form({initValue, mode}) {
                 }
             }
         }
-        callCreateDeck();
-        console.log(newDeck);
-        setNewDeck({name:'', description:''});
+        cardAction();
+        setCard({front:'', back:''});
 
     } 
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name</label>
+                <label htmlFor="front">Front</label>
                 <br />
-                    <input 
-                     id="name"
+                    <textarea 
+                     id="front"
                      type="text"
-                     placeholder="Deck Name"
+                     rows="4"
+                     cols="30"
+                     placeholder="Front side of card"
                      onChange={handleChange}
-                     value={newDeck.name}
+                     value={card.front}
                 />
                 <br />
-                <label htmlFor="description">Description</label>
+                <label htmlFor="back">Back</label>
                 <br />
                     <textarea
-                        id="description"
+                        id="back"
                         rows="4"
                         cols="30"
-                        placeholder="Brief description of the deck"
+                        placeholder="Back side of card"
                         onChange={handleChange}
-                        value={newDeck.description}
+                        value={card.back}
                     />
                 <br />
-                <Link to="/">
+                <Link to={`/decks/${deckId}`}>
                     <button>Cancel</button>
                 </Link>
                     <button type="submit">Submit</button>                

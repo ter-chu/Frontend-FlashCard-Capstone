@@ -5,9 +5,9 @@ import BreadCrumbBar from "./BreadCrumbBar";
 
 
 
-function EditDeck() {
+function EditDeck({setDecks}) {
     const deckNumber = useParams();
-    const [deckEdit, setDeckEdit] = useState([]);
+    const [deckEdit, setDeckEdit] = useState({name:'', description:''});
  
     const handleChange = (({target: {id, value}}) => {
         setDeckEdit({...deckEdit, 
@@ -21,6 +21,7 @@ function EditDeck() {
             const abortController = new AbortController();
             try {
                 const response = await updateDeck(deckEdit, abortController.signal);
+                setDecks(response);
                 window.location=`/decks/${response.id}`;
             } catch (error) {
                 if (error === "AbortError") {

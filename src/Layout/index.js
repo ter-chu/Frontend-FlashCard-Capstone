@@ -36,12 +36,6 @@ function Layout() {
     };
   }, []);
 
-
-  const deleteFromCards = (indexToDelete) => { 
-    setCards.filter((currentCards) => 
-      currentCards.filter((ignored, index) => index != indexToDelete));
-  }
-
   return (
     <div>
       <Header />

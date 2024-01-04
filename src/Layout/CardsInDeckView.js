@@ -27,7 +27,7 @@ useEffect (() => {
         return () => {
             abortController.abort();
         }
-}, [])
+}, [deckNumber.deckId])
     return (
         <div>
             {cards.map((thisCard, index) => (

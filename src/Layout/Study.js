@@ -28,7 +28,7 @@ function Study() {
                 abortController.abort();
         }
         
-    }, []);
+    }, [deckNumber.deckId]);
     if (deck.name) {
         return (
             <div>

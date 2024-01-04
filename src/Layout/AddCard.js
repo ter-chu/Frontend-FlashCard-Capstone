@@ -27,7 +27,7 @@ function AddCard() {
         return() => {
             abortController.abort();
         }
-    }, [])
+    }, [deckNumber.deckId])
    
     const handleChange = (({target: {id, value}}) => {
         setCard({...card, 

@@ -27,7 +27,7 @@ function EditCard() {
             }
         }
         loadCard();
-    }, []);
+    }, [urlParams.deckId]);
 
     const handleChange = (({target: {id, value}}) => {
         setCard({...card, 

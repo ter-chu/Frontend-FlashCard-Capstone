@@ -55,7 +55,7 @@ function EditDeck({setDecks}) {
         return() => {
             abortController.abort();
         }
-    }, [])
+    }, [deckNumber.deckId])
 
 
     return (

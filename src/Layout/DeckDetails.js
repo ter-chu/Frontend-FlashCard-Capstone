@@ -40,7 +40,7 @@ function DeckDetails () {
         return () => {
             abortController.abort();
         }
-}, [])
+}, [deckNumber.deckId])
     return (
         <div>
             <BreadCrumbBar level1={deckInfo.name}/>
